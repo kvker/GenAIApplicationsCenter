@@ -135,7 +135,7 @@ class ChatBox extends HTMLElement {
     this.init()
   }
 
-  init(hello_word = '你好, 现在可以开始问我文档中的相关问题啦.') {
+  init(hello_word = '你好, 现在可以开始问我相关问题啦.') {
     this.input_dom.disabled = false
     this.updateAnswer(hello_word, true)
   }
