@@ -75,7 +75,7 @@ class ApplicationStage extends BaseHTMLElement {
             <button id="stage_min" class="flex aic jcc pointer">最小化</button>
             <button id="stage_close" class="flex aic jcc pointer">关闭</button>
           </div>
-          <div class="flex aic jcc f1"></div>
+          <div id="stage_application_container" class="flex aic jcc f1"></div>
         </div>
       </div>
     `
@@ -84,6 +84,7 @@ class ApplicationStage extends BaseHTMLElement {
     this.dom.stage = this.shadow.querySelector('#stage')
     this.dom.stage_min = this.shadow.querySelector('#stage_min')
     this.dom.stage_close = this.shadow.querySelector('#stage_close')
+    this.dom.stage_application_container = this.shadow.querySelector('#stage_application_container')
 
 
     this.dom.stage_min.addEventListener('click', () => {
@@ -113,7 +114,7 @@ class ApplicationStage extends BaseHTMLElement {
     } else {
       live_application_tag = document.createElement(application.tag)
       live_application_tag.id = application.id
-      this.dom.stage.append(live_application_tag)
+      this.dom.stage_application_container.append(live_application_tag)
       this.application_tag_list.push(live_application_tag)
     }
   }
