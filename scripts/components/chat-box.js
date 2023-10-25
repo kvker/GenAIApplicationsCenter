@@ -1,7 +1,6 @@
 class ChatBox extends HTMLElement {
   constructor() {
     super()
-    this.is_sending = false
     this.shadow = this.attachShadow({ mode: 'open' })
     const template = document.createElement('template')
     template.innerHTML = `
@@ -147,7 +146,7 @@ class ChatBox extends HTMLElement {
         <div class="chat-answer-item">
           <img class="avatar" src="icons/default-answer-avatar.png">
           <div class="content-box">
-            <div class="chat-content p-main">${text}</div>
+            <pre class="chat-content p-main">${text}</pre>
           </div>
         </div>
       `
@@ -196,64 +195,9 @@ class ChatBox extends HTMLElement {
   }
 
   requestChat(text) {
-    if(this.is_sending) return
-    fetch('https://api.kvker.com/api/sse/chat/open', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        Accept: 'text/event-stream',
-      },
-      body: JSON.stringify({
-        "messages": [{ "role": "user", "content": text }],
-        context: '',
-      }),
-    }).then(response => {
-      const reader = response.body.getReader()
-      let text = ''
-      let json = {}
-      let result_text = ''
-      // let meta
-
-      let process = ({ done, value }) => {
-        if(done) {
-          console.log(result_text)
-          // console.log(meta)
-          console.log('Stream closed')
-          this.updateAnswer('')
-          return
-        }
-
-        text = new TextDecoder('utf-8').decode(value)
-        // console.log(text)
-
-        let kvs = text.split('\n')
-        // console.log(kvs)
-        kvs.forEach(kv => {
-          console.log(kv)
-          let [key, value] = kv.split(':')
-          if(key) {
-            json[key] = value
-            if(key === 'data') {
-              let done = result_text === ''
-              result_text += value
-              this.updateAnswer(value, done)
-            }
-            if(key === 'event' && value === 'finish') {
-              this.is_sending = false
-              this.scrollToBottom()
-            }
-          }
-        })
-        // console.log(json.data)
-
-        return reader.read().then(process)
-      }
-      reader.read().then(process)
+    chat.sse(text, (value, done) => {
+      this.updateAnswer(value, done)
     })
-      .catch(error => {
-        this.is_sending = false
-        console.log('error', error)
-      })
   }
 
   dispatchCustomEvent(event_name, value) {
