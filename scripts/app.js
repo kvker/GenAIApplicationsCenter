@@ -1,6 +1,12 @@
 let app = new class App {
   constructor() {
+    this.installApplication()
+  }
 
+  installApplication() {
+    window.application_list.forEach(application => {
+      this.eventHandler('application-list', 'addApplication', application, this )
+    })
   }
 
   eventHandler(target_query, event, data, dispatcher) {

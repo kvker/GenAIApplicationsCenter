@@ -30,8 +30,8 @@ class ApplicationList extends BaseHTMLElement {
     const template = document.createElement('template')
     template.innerHTML = `
       <style>
-        @import url('../../styles/variable.css');
-        @import url('../../styles/main.css');
+        @import url('styles/variable.css');
+        @import url('styles/main.css');
         :host {
           width: 62%;
           height: 500px;
@@ -51,11 +51,10 @@ class ApplicationList extends BaseHTMLElement {
           width: 200px;
           height: 80px;
           background-color: antiquewhite;
+          margin-left: var(--main_gap);
         }
       </style>
-      <ul id="application_list" class="flex-wrap">
-        <li class="application-item flex aic jcc pointer">application 1A</li>
-      </ul>
+      <ul id="application_list" class="flex-wrap"></ul>
     `
     this.shadow.appendChild(template.content.cloneNode(true))
     this.dom.application_list = this.shadow.querySelector('#application_list')
@@ -63,9 +62,25 @@ class ApplicationList extends BaseHTMLElement {
       const target = e.target
       let application_item = target.closest('.application-item')
       if(application_item) {
-        app.eventHandler('application-stage', 'toggleStage', {}, this)
+        app.eventHandler('application-stage', 'showApplication', application_item.application, this)
       }
     })
+  }
+
+  addApplication(application) {
+    const application_item = document.createElement('li')
+    application_item.className = 'application-item flex aic jcc pointer'
+    application_item.id = application.target_id
+    application_item.innerHTML = application.name
+    application_item.application = application
+    this.dom.application_list.appendChild(application_item)
+
+    const script = document.createElement('script')
+    script.src = application.js_url
+    document.body.append(script)
+    script.onload = () => {
+      app.eventHandler('application-stage', 'registApplication', application, this)
+    }
   }
 }
 

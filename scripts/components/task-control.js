@@ -30,8 +30,8 @@ class TaskControl extends BaseHTMLElement {
     const template = document.createElement('template')
     template.innerHTML = `
       <style>
-        @import url('../../styles/variable.css');
-        @import url('../../styles/main.css');
+        @import url('styles/variable.css');
+        @import url('styles/main.css');
         :host {
           flex: 1;
           height: 500px;

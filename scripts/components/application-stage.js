@@ -2,6 +2,8 @@ class ApplicationStage extends BaseHTMLElement {
   constructor() {
     super()
     console.log('舞台 web component 被创建了')
+    this.application_list = []
+    this.application_tag_list = [] // 正在存活的应用 tag
     // 加载依赖
     this.loadDependences()
       .then(() => {
@@ -30,8 +32,8 @@ class ApplicationStage extends BaseHTMLElement {
     const template = document.createElement('template')
     template.innerHTML = `
       <style>
-        @import url('../../styles/variable.css');
-        @import url('../../styles/main.css');
+        @import url('styles/variable.css');
+        @import url('styles/main.css');
         :host {
           position: fixed;
           display: block;
@@ -73,9 +75,7 @@ class ApplicationStage extends BaseHTMLElement {
             <button id="stage_min" class="flex aic jcc pointer">最小化</button>
             <button id="stage_close" class="flex aic jcc pointer">关闭</button>
           </div>
-          <div class="flex aic jcc f1">
-            stage
-          </div>
+          <div class="flex aic jcc f1"></div>
         </div>
       </div>
     `
@@ -99,11 +99,23 @@ class ApplicationStage extends BaseHTMLElement {
     })
   }
 
-  toggleStage() {
-    console.log(this)
+  registApplication(application) {
+    this.application_list.push(application)
+  }
+
+  showApplication(application) {
     this.dom.stage_mask.classList.remove('scale-0')
     this.dom.stage.classList.remove('scale-0')
     this.dom.stage.classList.add('scale-1')
+    let live_application_tag = this.application_tag_list.find(item => item.id === application.id)
+    if(live_application_tag) {
+      this.dom.stage.append(live_application_tag)
+    } else {
+      live_application_tag = document.createElement(application.tag)
+      live_application_tag.id = application.id
+      this.dom.stage.append(live_application_tag)
+      this.application_tag_list.push(live_application_tag)
+    }
   }
 }
 
