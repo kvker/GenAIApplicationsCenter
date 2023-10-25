@@ -23,127 +23,25 @@
       background: pink;
       padding: var(--main_gap);
     }
-
-    #application_list {
-      width: 62%;
-      height: 500px;
-      background-color: beige;
-      padding: var(--main_gap);
-    }
-
-    #task_control {
-      margin-left: var(--main_gap);
-      height: 500px;
-      background-color: blanchedalmond;
-      padding: var(--main_gap);
-    }
-
-    #info_box {
-      margin-top: var(--main_gap);
-      width: 100%;
-      background-color: burlywood;
-      padding: var(--main_gap);
-    }
-
-    #userinfo {
-      width: 200px;
-      height: 100%;
-      background-color: antiquewhite;
-    }
-
-    #create_application {
-      width: 200px;
-      height: 100%;
-      background-color: antiquewhite;
-    }
-
-    .application-item {
-      width: 200px;
-      height: 80px;
-      background-color: antiquewhite;
-    }
-
-    #stage {
-      width: 90%;
-      height: 90%;
-      transition: transform 0.3s linear;
-      background-color: antiquewhite;
-    }
-
-    .scale-0 {
-      transform: scale(0);
-    }
-
-    .scale-1 {
-      transform: scale(1);
-    }
-
-    #stage_controls {
-      height: 60px;
-      background-color: red;
-    }
-
-    #stage_min, #stage_max, #stage_close {
-      width: 120px;
-      height: 40px;
-      background-color: bisque;
-      margin-right: var(--main_gap);
-    }
   </style>
 </head>
 
 <body>
   <div id="playground" class="flex-c aic jcsb">
     <div class="flex aic jcsb w-100">
-      <ul id="application_list" class="flex-wrap">
-        <li class="application-item flex aic jcc pointer">application A</li>
-      </ul>
-      <div id="task_control" class="f1">
-        task_control
-      </div>
+      <application-list></application-list>
+      <task-control></task-control>
     </div>
-    <div id="info_box" class="f1 flex aic jcsb">
-      <div id="userinfo">userinfo</div>
-      info_box
-      <div id="create_application">create_application</div>
-    </div>
-    <div id="stage_mask" class="mask flex aic jcc scale-0">
-      <div id="stage" class="flex-c scale-0">
-        <div id="stage_controls" class="flex aic jcfe">
-          <button id="stage_min" class="flex aic jcc pointer">最小化</button>
-          <!-- <button id="stage_max" class="flex aic jcc pointer">最大化</button> -->
-          <button id="stage_close" class="flex aic jcc pointer">关闭</button>
-        </div>
-        <div class="flex aic jcc f1">
-          stage
-        </div>
-      </div>
-    </div>
+    <info-box class="f1"></info-box>
+    <application-stage></application-stage>
   </div>
 
-  <script>
-    application_list.addEventListener('click', (e) => {
-      const target = e.target
-      const application_item = target.closest('.application-item')
-      if(application_item) {
-        stage_mask.classList.remove('scale-0')
-        stage.classList.remove('scale-0')
-        stage.classList.add('scale-1')
-      }
-    })
-
-    stage_min.addEventListener('click', () => {
-      // stage.classList.remove('scale-1')
-      // stage.classList.add('scale-0')
-      alert('暂未实现')
-    })
-
-    stage_close.addEventListener('click', () => {
-      stage.classList.remove('scale-1')
-      stage.classList.add('scale-0')
-      stage_mask.classList.add('scale-0')
-    })
-  </script>
+  <script src="scripts/components/base-html-element.js"></script>
+  <script src="scripts/components/application-list.js"></script>
+  <script src="scripts/components/task-control.js"></script>
+  <script src="scripts/components/application-stage.js"></script>
+  <script src="scripts/components/info-box.js"></script>
+  <script src="scripts/app.js"></script>
 </body>
 
 </html>
