@@ -29,7 +29,7 @@ window.chat = new class Caht {
         if(done) {
           console.log(result_text)
           console.log('Stream closed')
-          this.updateAnswer('')
+          // callback('', done)
           return
         }
 
@@ -53,7 +53,6 @@ window.chat = new class Caht {
             }
             if(key === 'event' && value === 'finish') {
               this.is_generatting = false
-              this.scrollToBottom()
             }
           }
         })

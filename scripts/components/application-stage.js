@@ -2,9 +2,9 @@ class ApplicationStage extends BaseHTMLElement {
   constructor() {
     super()
     console.log('舞台 web component 被创建了')
-    this.application_list = []
-    this.application_tag_list = [] // 正在存活的应用 tag
-    this.live_application_tag = null // 当前正在展示的应用 tag
+    this.current_application = null // 当前正在展示的应用
+    this.application_dom_list = [] // 应用 tag 列表
+    this.current_application_dom = null // 当前正在展示的应用 tag
     // 加载依赖
     this.loadDependences()
       .then(() => {
@@ -89,9 +89,6 @@ class ApplicationStage extends BaseHTMLElement {
 
 
     this.dom.stage_min.addEventListener('click', () => {
-      // stage.classList.remove('scale-1')
-      // stage.classList.add('scale-0')
-      alert('暂未实现')
       this.doMinimize.call(this)
     })
 
@@ -101,21 +98,23 @@ class ApplicationStage extends BaseHTMLElement {
   }
 
   createApplication(application) {
-    this.application_list.push(application)
   }
 
   showApplication(application) {
+    this.current_application = application
     this.dom.stage_mask.classList.remove('scale-0')
     this.dom.stage.classList.remove('scale-0')
     this.dom.stage.classList.add('scale-1')
-    this.live_application_tag = this.application_tag_list.find(item => item.id === application.id)
-    if(this.live_application_tag) {
-      this.dom.stage.append(this.live_application_tag)
+    this.current_application_dom = this.application_dom_list.find(item => item.id === application.id)
+    console.log(this.current_application_dom)
+    if(this.current_application_dom) {
+      this.dom.stage.append(this.current_application_dom)
     } else {
-      this.live_application_tag = document.createElement(application.tag)
-      this.live_application_tag.id = application.id
-      this.dom.stage_application_container.append(this.live_application_tag)
-      this.application_tag_list.push(this.live_application_tag)
+      this.current_application_dom = document.createElement(application.tag)
+      this.current_application_dom.id = application.id
+      this.dom.stage_application_container.append(this.current_application_dom)
+      this.application_dom_list.push(this.current_application_dom)
+      app.eventHandler('task-control', 'createApplication', this.current_application, this)
     }
   }
 
@@ -123,12 +122,14 @@ class ApplicationStage extends BaseHTMLElement {
     this.dom.stage_mask.classList.add('scale-0')
     this.dom.stage.classList.remove('scale-1')
     this.dom.stage.classList.add('scale-0')
+    app.eventHandler('task-control', 'highlightApplication', this.current_application, this)
   }
 
   doClose() {
     this.doMinimize()
-    this.live_application_tag.remove()
-    this.application_tag_list.splice(this.application_tag_list.indexOf(this.live_application_tag), 1)
+    this.current_application_dom.remove()
+    this.application_dom_list.splice(this.application_dom_list.indexOf(this.current_application_dom), 1)
+    app.eventHandler('task-control', 'deleteApplication', this.current_application, this)
   }
 }
 

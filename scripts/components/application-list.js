@@ -2,6 +2,8 @@ class ApplicationList extends BaseHTMLElement {
   constructor() {
     super()
     console.log('应用列表 web component 被创建了')
+    this.application_list = [] // 应用列表
+    this.current_application = null // 当前正在展示的应用
     // 加载依赖
     this.loadDependences()
       .then(() => {
@@ -62,17 +64,18 @@ class ApplicationList extends BaseHTMLElement {
       const target = e.target
       let application_item = target.closest('.application-item')
       if(application_item) {
-        app.eventHandler('application-stage', 'showApplication', application_item.application, this)
+        this.current_application = this.application_list.find(application => application.id === application_item.id)
+        app.eventHandler('application-stage', 'showApplication', this.current_application, this)
       }
     })
   }
 
   createApplication(application) {
+    this.application_list.push(application)
     const application_item = document.createElement('li')
     application_item.className = 'application-item flex aic jcc pointer'
-    application_item.id = application.target_id
+    application_item.id = application.id
     application_item.innerHTML = application.name
-    application_item.application = application
     this.dom.application_list.appendChild(application_item)
 
     const script = document.createElement('script')

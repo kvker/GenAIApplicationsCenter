@@ -8,9 +8,10 @@ class ChatBox extends HTMLElement {
       <link rel="stylesheet" href="styles/main.css">
       <style>
         :host {
-          display: block;
+          display: flex;
+          flex-direction: column;
           width: 100%;
-          height: 100%;
+          height: 588px;
         }
 
         .p-main {
@@ -197,6 +198,10 @@ class ChatBox extends HTMLElement {
   requestChat(text) {
     chat.sse(text, (value, done) => {
       this.updateAnswer(value, done)
+      if(done) {
+        this.updateAnswer('')
+        this.scrollToBottom()
+      }
     })
   }
 
