@@ -1,11 +1,14 @@
 window.chat = new class Caht {
   constructor() {
-    this.is_sending = false
+    this.is_generatting = false
     this.sse_url = 'https://api.kvker.com/api/sse/chat/open'
   }
 
   sse(text, callback) {
-    if(this.is_sending) return
+    if(this.is_generatting) {
+      alert('正在生成中...')
+      return
+    }
     fetch(this.sse_url, {
       method: 'POST',
       headers: {
@@ -49,7 +52,7 @@ window.chat = new class Caht {
               callback(value, done)
             }
             if(key === 'event' && value === 'finish') {
-              this.is_sending = false
+              this.is_generatting = false
               this.scrollToBottom()
             }
           }
@@ -61,7 +64,7 @@ window.chat = new class Caht {
       reader.read().then(process)
     })
       .catch(error => {
-        this.is_sending = false
+        this.is_generatting = false
         console.log('error', error)
       })
   }

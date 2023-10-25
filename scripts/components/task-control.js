@@ -50,6 +50,22 @@ class TaskControl extends BaseHTMLElement {
     `
     this.shadow.appendChild(template.content.cloneNode(true))
   }
+
+  createApplication(application) {
+    alert('移除应用')
+  }
+
+  updateApplication(application) {
+    alert('注册应用')
+  }
+
+  readApplication(application) {
+    alert('读取应用')
+  }
+
+  deleteApplication(application) {
+    alert('删除应用')
+  }
 }
 
 window.customElements.define('task-control', TaskControl)

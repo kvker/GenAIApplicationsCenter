@@ -4,6 +4,7 @@ class ApplicationStage extends BaseHTMLElement {
     console.log('舞台 web component 被创建了')
     this.application_list = []
     this.application_tag_list = [] // 正在存活的应用 tag
+    this.live_application_tag = null // 当前正在展示的应用 tag
     // 加载依赖
     this.loadDependences()
       .then(() => {
@@ -91,16 +92,15 @@ class ApplicationStage extends BaseHTMLElement {
       // stage.classList.remove('scale-1')
       // stage.classList.add('scale-0')
       alert('暂未实现')
+      this.doMinimize.call(this)
     })
 
     this.dom.stage_close.addEventListener('click', () => {
-      this.dom.stage.classList.remove('scale-1')
-      this.dom.stage.classList.add('scale-0')
-      this.dom.stage_mask.classList.add('scale-0')
+      this.doClose.call(this)
     })
   }
 
-  registApplication(application) {
+  createApplication(application) {
     this.application_list.push(application)
   }
 
@@ -108,15 +108,27 @@ class ApplicationStage extends BaseHTMLElement {
     this.dom.stage_mask.classList.remove('scale-0')
     this.dom.stage.classList.remove('scale-0')
     this.dom.stage.classList.add('scale-1')
-    let live_application_tag = this.application_tag_list.find(item => item.id === application.id)
-    if(live_application_tag) {
-      this.dom.stage.append(live_application_tag)
+    this.live_application_tag = this.application_tag_list.find(item => item.id === application.id)
+    if(this.live_application_tag) {
+      this.dom.stage.append(this.live_application_tag)
     } else {
-      live_application_tag = document.createElement(application.tag)
-      live_application_tag.id = application.id
-      this.dom.stage_application_container.append(live_application_tag)
-      this.application_tag_list.push(live_application_tag)
+      this.live_application_tag = document.createElement(application.tag)
+      this.live_application_tag.id = application.id
+      this.dom.stage_application_container.append(this.live_application_tag)
+      this.application_tag_list.push(this.live_application_tag)
     }
+  }
+
+  doMinimize() {
+    this.dom.stage_mask.classList.add('scale-0')
+    this.dom.stage.classList.remove('scale-1')
+    this.dom.stage.classList.add('scale-0')
+  }
+
+  doClose() {
+    this.doMinimize()
+    this.live_application_tag.remove()
+    this.application_tag_list.splice(this.application_tag_list.indexOf(this.live_application_tag), 1)
   }
 }
 

@@ -67,7 +67,7 @@ class ApplicationList extends BaseHTMLElement {
     })
   }
 
-  addApplication(application) {
+  createApplication(application) {
     const application_item = document.createElement('li')
     application_item.className = 'application-item flex aic jcc pointer'
     application_item.id = application.target_id
@@ -79,7 +79,7 @@ class ApplicationList extends BaseHTMLElement {
     script.src = application.js_url
     document.body.append(script)
     script.onload = () => {
-      app.eventHandler('application-stage', 'registApplication', application, this)
+      app.eventHandler('application-stage', 'createApplication', application, this)
     }
   }
 }
