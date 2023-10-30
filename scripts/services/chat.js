@@ -27,9 +27,9 @@ window.chat = new class Caht {
 
       let process = ({ done, value }) => {
         if(done) {
-          console.log(result_text)
+          // console.log(result_text)
           console.log('Stream closed')
-          // callback('', done)
+          callback(null, done)
           return
         }
 
@@ -44,12 +44,11 @@ window.chat = new class Caht {
           if(key) {
             json[key] = value
             if(key === 'data') {
-              let done = result_text === ''
               if(!value) {
                 value = '\n'
               }
               result_text += value
-              callback(value, done)
+              callback(value, false)
             }
             if(key === 'event' && value === 'finish') {
               this.is_generatting = false
