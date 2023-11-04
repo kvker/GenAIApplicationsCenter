@@ -86,7 +86,7 @@ class TaskControl extends BaseHTMLElement {
       this.application_list.push(application)
       this.current_application = application
       const li = document.createElement('li')
-      li.classList.add('application-item', 'flex', 'aic', 'jcsb')
+      li.classList.add('application-item', 'flex', 'aic', 'jcsb', 'pointer')
       li.id = application.id
       li.innerHTML = `
         <div class="application-item-name">${application.name}</div>
