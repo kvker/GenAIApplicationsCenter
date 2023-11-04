@@ -21,11 +21,11 @@ let app = new class App {
    * @param {*} dispatcher 调用者
    */
   eventHandler(wc_query, event, data, dispatcher) {
-    // 需要登录才能调用
-    if(!lc.currentUser()) {
-      alert('需要先登录')
-      return
-    }
+    // 部分功能需要登录才能调用
+    // if(!lc.currentUser()) {
+    //   alert('需要先登录')
+    //   return
+    // }
     let target = document.querySelector(wc_query)
     let handler = target && target[event]
     handler && handler.call(target, data)
