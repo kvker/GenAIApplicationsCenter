@@ -1,7 +1,8 @@
-window.chat = new class Caht {
+window.chat = new class Chat {
   constructor() {
     this.is_generatting = false
     this.sse_url = 'https://api.kvker.com/api/sse/chat/open'
+    this.chat_box = document.querySelector('chat-box')
   }
 
   sse(text, callback) {
@@ -29,7 +30,7 @@ window.chat = new class Caht {
         if(done) {
           // console.log(result_text)
           console.log('Stream closed')
-          callback(null, done)
+          // callback('', done)
           return
         }
 
