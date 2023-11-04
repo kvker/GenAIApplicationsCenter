@@ -196,6 +196,7 @@ class ChatBox extends HTMLElement {
   }
 
   requestChat(text) {
+    this.createNewChatBox()
     chat.sse(text, (value, done) => {
       this.updateAnswer(value, done)
       if(done) {
@@ -203,6 +204,10 @@ class ChatBox extends HTMLElement {
         this.scrollToBottom()
       }
     })
+  }
+
+  createNewChatBox() {
+    this.updateAnswer('', true)
   }
 
   dispatchCustomEvent(event_name, value) {
@@ -221,28 +226,3 @@ class ChatBox extends HTMLElement {
 }
 
 customElements.define('chat-box', ChatBox)
-// 示例代码
-// let html = `
-// <div class="flex service-detail-area" style="height:466px">
-//   <div style="width:380px;height:100%;margin-right:16px;background-color: #fff;"></div>
-//   <div class="f1 h-100">
-//     <ks-chat-box></ks-chat-box>
-//   </div>
-// </div>
-// `
-// document.querySelector('main')?.insertAdjacentHTML('beforeend', html)
-// let chat_box = document.querySelector('ks-chat-box') as ChatBox
-// // init之后 输入框可用
-// chat_box.init('你好,我是你的专属客服,你可以开始问我文档中的相关问题啦')
-// chat_box.addEventListener('confirm', async (event) => {
-//   let value = (event as CustomEvent).detail
-//   console.log(value)
-//   // 获取结果
-//   let answer_list = ['你好,', 'asdf', 'asdfad']
-//   let idx = 0
-//   for (let answer of answer_list) {
-//     chat_box.updateAnswer(answer, idx === 0)
-//     idx++
-//     await new Promise(resolve => setTimeout(resolve, 500))
-//   }
-// })
