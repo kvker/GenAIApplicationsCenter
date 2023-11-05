@@ -123,8 +123,8 @@ class TaskControl extends BaseHTMLElement {
     this.current_application_dom = this.getCurrentApplicationDom()
     this.current_application_dom.classList.add('highlight')
     setTimeout(() => {
-      this.current_application_dom.classList.remove('highlight')
-    }, 2000)
+      this.application_dom_list.forEach(i => i.classList.remove('highlight'))
+    }, 1000)
   }
 
   getCurrentApplicationDom() {
