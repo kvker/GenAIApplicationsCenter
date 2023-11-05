@@ -39,6 +39,7 @@ class TaskControl extends BaseHTMLElement {
         :host {
           flex: 1;
           height: 500px;
+          height: 100%;
           margin-left: var(--main_gap);
         }
         #task_control {

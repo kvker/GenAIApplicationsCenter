@@ -37,6 +37,7 @@ class ApplicationList extends BaseHTMLElement {
         :host {
           width: 62%;
           height: 500px;
+          height: 100%;
         }
         #application_list {
           width: 100%;
