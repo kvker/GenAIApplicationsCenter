@@ -5,9 +5,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>生成式AI应用中心</title>
+  <title>AI人工智能应用中心</title>
   <meta name="keywords" content="AI，人工智能，学习AI，创建AI应用，AI赚钱，文字创作，写作，作曲，文章生成，聊天，视频，论文，周报，日报">
   <meta name="description" content="牛逼的生成式AI桌面工具。">
+  <script>
+    const is_pwa = window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true
+    if(is_pwa) {
+      window.resizeTo(1280 + 14, 720 + 40)
+    }
+  </script>
+  <link rel="manifest" href="app.webmanifest">
   <link rel="stylesheet" href="styles/variable.css">
   <link rel="stylesheet" href="styles/main.css">
   <style>
