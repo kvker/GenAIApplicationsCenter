@@ -39,7 +39,6 @@ class ApplicationStage extends BaseHTMLElement {
           position: fixed;
           display: block;
           height: 100%;
-          padding: 20px
         }
         #stage {
           width: 90%;
