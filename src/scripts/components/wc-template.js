@@ -1,7 +1,7 @@
 class TemplateWC extends BaseHTMLElement {
   constructor() {
     super()
-    console.log('试题变更检索web component被创建了')
+    console.log('XXXX web component 被创建了')
     // 加载依赖
     this.loadDependences()
       .then(() => {

@@ -75,7 +75,8 @@ class TaskControl extends BaseHTMLElement {
       const target = e.target
       let application_item = target.closest('.application-item')
       if(application_item) {
-        this.highlightApplication(application_item)
+        let application = this.application_list.find(i => i.id === application_item.id)
+        this.highlightApplication(application)
         app.eventHandler('application-stage', 'showApplication', this.current_application, this)
       }
     })
@@ -122,8 +123,8 @@ class TaskControl extends BaseHTMLElement {
     this.current_application_dom = this.getCurrentApplicationDom()
     this.current_application_dom.classList.add('highlight')
     setTimeout(() => {
-      this.current_application_dom.classList.remove('highlight')
-    }, 2000)
+      this.application_dom_list.forEach(i => i.classList.remove('highlight'))
+    }, 1000)
   }
 
   getCurrentApplicationDom() {

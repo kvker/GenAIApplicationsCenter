@@ -97,6 +97,7 @@ class ApplicationStage extends BaseHTMLElement {
   }
 
   createApplication(application) {
+
   }
 
   showApplication(application) {
@@ -105,9 +106,8 @@ class ApplicationStage extends BaseHTMLElement {
     this.dom.stage.classList.remove('scale-0')
     this.dom.stage.classList.add('scale-1')
     this.current_application_dom = this.application_dom_list.find(item => item.id === application.id)
-    console.log(this.current_application_dom)
     if(this.current_application_dom) {
-      this.dom.stage.append(this.current_application_dom)
+      this.dom.stage.append(this.current_application_dom) // 创建或放到最后一个位置
     } else {
       this.current_application_dom = document.createElement(application.tag)
       this.current_application_dom.id = application.id
@@ -115,6 +115,11 @@ class ApplicationStage extends BaseHTMLElement {
       this.application_dom_list.push(this.current_application_dom)
       app.eventHandler('task-control', 'createApplication', this.current_application, this)
     }
+    // 当前显示处理
+    this.application_dom_list.forEach(i => {
+      i.classList.add('none')
+    })
+    this.current_application_dom.classList.remove('none')
   }
 
   doMinimize() {

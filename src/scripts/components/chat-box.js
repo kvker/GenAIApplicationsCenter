@@ -1,9 +1,8 @@
-class ChatBox extends HTMLElement {
+class ChatBox extends BaseHTMLElement {
   constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     const template = document.createElement('template')
-    this.is_sending = false
     template.innerHTML = `
       <link rel="stylesheet" href="styles/variable.css">
       <link rel="stylesheet" href="styles/main.css">
@@ -173,11 +172,11 @@ class ChatBox extends HTMLElement {
 
   inputValue() {
     if(!this.input_dom.value.trim()) return
-    if(this.is_sending) {
+    if(this.status.is_sending) {
       alert('正在处理中...')
       return
     }
-    this.is_sending = true
+    this.status.is_sending = true
     // 处理输入
     let value = this.input_dom.value
     let html = `
@@ -207,7 +206,7 @@ class ChatBox extends HTMLElement {
     let text_list = this.getChatContext()
     chat.sse(text_list, (value, done) => {
       if(done) {
-        this.is_sending = false
+        this.status.is_sending = false
         this.scrollToBottom()
       } else {
         this.updateAnswer(value, done)
