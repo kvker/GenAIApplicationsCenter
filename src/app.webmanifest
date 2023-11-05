@@ -1,0 +1,60 @@
+{
+  "background_color": "#ffffff",
+  "description": "AI应用中心是一款集成了众多AI应用的在线平台，用户不仅可以直接使用现有的AI应用，还可以自主创建本地AI应用。通过我们的应用，您可以轻松地将AI功能集成到您的业务场景中，提高工作效率，实现智能化转型。主要功能：1. 丰富的AI应用：我们提供了多种类型的AI应用，涵盖了文本处理、图像识别、语音识别、自然语言处理等众多领域，满足您的各类需求。2. 自主创建AI应用：用户可以基于我们的AI开发框架，轻松创建属于自己的AI应用，并与其他应用一样，实现在后台挂载和随时调用。3. 强大的后台管理：我们的平台为您提供了完善的后台管理系统，您可以随时查看和控制正在运行的AI应用，确保应用稳定高效地运行。4. 完全免费：AI应用中心对所有用户免费开放，您可以在没有任何经济压力情况下，尽情尝试和体验各种AI应用。5. 安全可靠：我们重视用户数据的安全，采用了严格的数据保护措施，确保您的数据安全得到充分保障。6. 持续更新：我们将不断优化和完善我们的平台，为您提供更强大的AI应用和更优质的服务。",
+  "dir": "ltr",
+  "orientation": "landscape-primary",
+  "scope": "/",
+  "name": "AI人工智能应用中心",
+  "short_name": "AI人工智能应用中心",
+  "icons": [
+    {
+      "src": "icons/logo-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "icons/logo-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "icons/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "id": "com.kvker.b.pwa",
+  "theme_color": "#ffffff",
+  "categories": [
+    "business",
+    "lifestyle",
+    "sports"
+  ],
+  "screenshots": [
+    {
+      "src": "images/shortcut0.png",
+      "type": "image/png",
+      "sizes": "1836x919"
+    },
+    {
+      "src": "images/shortcut1.png",
+      "type": "image/png",
+      "sizes": "1836x919"
+    }
+  ],
+  "lang": "zh",
+  "shortcuts": [
+    {
+      "name": "logo",
+      "url": "icons/logo-256.png",
+      "description": "logo"
+    }
+  ],
+  "display_override": [
+    "standalone",
+    "fullscreen",
+    "window-controls-overlay"
+  ]
+}

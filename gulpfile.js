@@ -63,6 +63,10 @@ function docs() {
   return src('src/docs/**/*').pipe(dest('dist/docs/'))
 }
 
-exports.default = parallel(htmls, styles, scripts, libs, icons, images, docs)
+function files() {
+  return src('src/app.webmanifest').pipe(dest('dist/'))
+}
+
+exports.default = parallel(htmls, styles, scripts, libs, icons, images, docs, files)
 
 // watch(['src/*', 'gulpfile.js'], parallel(htmls, styles, scripts))
