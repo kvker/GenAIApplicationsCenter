@@ -1,8 +1,10 @@
 window.chat = new class Chat {
   constructor() {
-    this.is_generatting = false
     this.sse_url = 'https://api.kvker.com/api/sse/chat/open'
     this.chat_box = document.querySelector('chat-box')
+    this.status = {
+      is_sending: false,
+    }
   }
 
   /**
@@ -11,8 +13,13 @@ window.chat = new class Chat {
    * @param {*} callback 每次sse触发的回调
    * @returns
    */
-  sse(text_list, callback) {
+  sse(text_list, callback, error_cb) {
     if(!text_list || !text_list.length) return
+    if(this.status.is_sending) {
+      error_cb(new Error('正在请求中...'))
+      return
+    }
+    this.status.is_sending = true
     let messages = text_list.map((text, index) => {
       if(index % 2) {
         return { role: "assistant", content: text }
@@ -20,10 +27,7 @@ window.chat = new class Chat {
         return { role: "user", content: text }
       }
     })
-    if(this.is_generatting) {
-      alert('正在生成中...')
-      return
-    }
+    let is_first = true
     fetch(this.sse_url, {
       method: 'POST',
       headers: {
@@ -62,10 +66,11 @@ window.chat = new class Chat {
                 value = '\n'
               }
               result_text += value
-              callback(value, false)
+              callback(value, false, is_first)
+              is_first = false
             }
             if(key === 'event' && value === 'finish') {
-              this.is_generatting = false
+              this.status.is_sending = false
             }
           }
         })
@@ -76,7 +81,7 @@ window.chat = new class Chat {
       reader.read().then(process)
     })
       .catch(error => {
-        this.is_generatting = false
+        this.status.is_sending = false
         console.log('error', error)
       })
   }
