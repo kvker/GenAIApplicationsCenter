@@ -5,7 +5,21 @@ window.chat = new class Chat {
     this.chat_box = document.querySelector('chat-box')
   }
 
-  sse(text, callback) {
+  /**
+   * 支持单独船文字或文字的数组
+   * @param {string | string[]} message 传入的文字信息
+   * @param {*} callback 每次sse触发的回调
+   * @returns
+   */
+  sse(text_list, callback) {
+    if(!text_list || !text_list.length) return
+    let messages = text_list.map((text, index) => {
+      if(index % 2) {
+        return { role: "assistant", content: text }
+      } else {
+        return { role: "user", content: text }
+      }
+    })
     if(this.is_generatting) {
       alert('正在生成中...')
       return
@@ -17,8 +31,7 @@ window.chat = new class Chat {
         Accept: 'text/event-stream',
       },
       body: JSON.stringify({
-        "messages": [{ "role": "user", "content": text }],
-        context: '',
+        messages,
       }),
     }).then(response => {
       const reader = response.body.getReader()
@@ -30,7 +43,7 @@ window.chat = new class Chat {
         if(done) {
           // console.log(result_text)
           console.log('Stream closed')
-          // callback('', done)
+          callback('', done)
           return
         }
 

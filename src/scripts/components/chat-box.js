@@ -3,6 +3,7 @@ class ChatBox extends HTMLElement {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     const template = document.createElement('template')
+    this.is_sending = false
     template.innerHTML = `
       <link rel="stylesheet" href="styles/variable.css">
       <link rel="stylesheet" href="styles/main.css">
@@ -24,12 +25,13 @@ class ChatBox extends HTMLElement {
           width: 100%;
           height: 100%;
           background-color:#fff;
+          padding: 20px;
         }
 
         .chat-container {
           flex: 1;
           overflow-y: auto;
-          padding-bottom: 20px;
+          margin-bottom: 20px;
         }
 
         .input-container {
@@ -92,6 +94,7 @@ class ChatBox extends HTMLElement {
           line-height: 20px;
           letter-spacing: 0em;
           text-align: left;
+          margin: 0;
         }
 
         .chat-answer-item .chat-content{
@@ -111,7 +114,7 @@ class ChatBox extends HTMLElement {
           <div class="chat-last-item"></div>
         </div>
         <div class="input-container p-main">
-          <textarea class="chat-input" placeholder="在这里输入问题..." disabled="true" type="text"></textarea>
+          <textarea class="chat-input" placeholder="在这里输入问题...\nEnter发送，Shift+Enter换行" disabled="true" type="text"></textarea>
         </div>
       </div>
     `
@@ -145,7 +148,6 @@ class ChatBox extends HTMLElement {
     if(done) {
       let html = `
         <div class="chat-answer-item">
-          <img class="avatar" src="icons/default-answer-avatar.png">
           <div class="content-box">
             <pre class="chat-content p-main">${text}</pre>
           </div>
@@ -170,7 +172,12 @@ class ChatBox extends HTMLElement {
   }
 
   inputValue() {
-    if(!this.input_dom.value) return
+    if(!this.input_dom.value.trim()) return
+    if(this.is_sending) {
+      alert('正在处理中...')
+      return
+    }
+    this.is_sending = true
     // 处理输入
     let value = this.input_dom.value
     let html = `
@@ -178,13 +185,13 @@ class ChatBox extends HTMLElement {
       <div class="content-box">
         <div class="chat-content p-main">${this.input_dom.value}</div>
       </div>
-      <img class="avatar" src="icons/default-user-avatar.png">
     </div>`
     this.chat_last_item.insertAdjacentHTML('beforebegin', html)
     this.chat_last_item.scrollIntoView({ behavior: 'smooth' })
     this.dispatchCustomEvent('confirm', value)
     this.input_dom.value = ''
-    this.requestChat(value)
+    this.requestChat()
+    this.scrollToBottom()
   }
 
   cancelSend() {
@@ -195,15 +202,22 @@ class ChatBox extends HTMLElement {
     }
   }
 
-  requestChat(text) {
+  requestChat() {
     this.createNewChatBox()
-    chat.sse(text, (value, done) => {
-      this.updateAnswer(value, done)
+    let text_list = this.getChatContext()
+    chat.sse(text_list, (value, done) => {
       if(done) {
-        this.updateAnswer('')
+        this.is_sending = false
         this.scrollToBottom()
+      } else {
+        this.updateAnswer(value, done)
       }
     })
+  }
+
+  getChatContext() {
+    let children = Array.from(this.chat_box.children).map(node => node.innerText)
+    return children.splice(1, children.length - 3) // 减3是因为不需要最后的空白行以及回车生成的临时等待显示的框
   }
 
   createNewChatBox() {
