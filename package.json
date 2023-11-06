@@ -1,12 +1,13 @@
 {
   "scripts": {
-    "dev": "npm run anywhere",
+    "dev": "concurrently 'npm:anywhere' 'npm:tsc'",
     "tsc": "tsc -w",
     "anywhere": "anywhere -h localhost -d src",
     "gulp": "rm -rf dist && echo 'delete dist/ success, then do gulp... && gulp",
     "build": "npm run gulp"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-htmlmin": "^5.0.1",
