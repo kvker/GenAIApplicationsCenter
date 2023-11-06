@@ -107,7 +107,7 @@ class ApplicationStage extends BaseHTMLElement {
     this.dom.stage.classList.add('scale-1')
     this.current_application_dom = this.application_dom_list.find(item => item.id === application.id)
     if(this.current_application_dom) {
-      this.dom.stage.append(this.current_application_dom) // 创建或放到最后一个位置
+      this.dom.stage_application_container.append(this.current_application_dom) // 创建或放到最后一个位置
     } else {
       this.current_application_dom = document.createElement(application.tag)
       this.current_application_dom.id = application.id
