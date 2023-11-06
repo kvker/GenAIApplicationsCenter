@@ -54,17 +54,28 @@
   <script src="scripts/components/application-list.js"></script>
   <script src="scripts/components/task-control.js"></script>
   <script src="scripts/components/application-stage.js"></script>
+  <script src="scripts/components/base/base-once-chat.js"></script>
   <script>
     window.application_list = [{
       name: '聊天机器人',
       tag: 'chat-box',
       js_url: 'scripts/components/chat-box.js',
-      id: 'chat_box',
+      id: 'chat-box',
     }, {
       name: '情感分析',
       tag: 'effection-analysis',
       js_url: 'scripts/components/effection-analysis.js',
-      id: 'effection_analysis',
+      id: 'effection-analysis',
+    }, {
+      name: '中译英',
+      tag: 'translation-c2e',
+      js_url: 'scripts/components/translation-c2e.js',
+      id: 'translation-c2e',
+    }, {
+      name: '英译中',
+      tag: 'translation-e2c',
+      js_url: 'scripts/components/translation-e2c.js',
+      id: 'translation-e2c',
     }]
   </script>
   <script src="scripts/app.js"></script>
