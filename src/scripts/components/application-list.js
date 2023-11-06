@@ -1,36 +1,34 @@
+"use strict";
 class ApplicationList extends BaseHTMLElement {
-  constructor() {
-    super()
-    console.log('应用列表 web component 被创建了')
-    this.application_list = [] // 应用列表
-    this.current_application = null // 当前正在展示的应用
-    // 加载依赖
-    this.loadDependences()
-      .then(() => {
-        this.init()
-      })
-      .catch(error => {
-        alert(error.message || error)
-      })
-  }
-
-  loadDependences() {
-    return new Promise((s, j) => {
-      s() // 这里应该删除
-      // let script = document.createElement('script')
-      // script.src = '/url/path/xxx.js'
-      // document.body.append(script)
-      // script.onload = () => {
-
-      // }
-      // script.onerror = j
-    })
-  }
-
-  init() {
-    this.shadow = this.attachShadow({ mode: 'open' })
-    const template = document.createElement('template')
-    template.innerHTML = `
+    constructor() {
+        super();
+        console.log('应用列表 web component 被创建了');
+        this.application_list = []; // 应用列表
+        this.current_application = null; // 当前正在展示的应用
+        // 加载依赖
+        this.loadDependences()
+            .then(() => {
+            this.init();
+        })
+            .catch(error => {
+            alert(error.message || error);
+        });
+    }
+    loadDependences() {
+        return new Promise((s, j) => {
+            s(1); // 这里应该删除
+            // let script = document.createElement('script')
+            // script.src = '/url/path/xxx.js'
+            // document.body.append(script)
+            // script.onload = () => {
+            // }
+            // script.onerror = j
+        });
+    }
+    init() {
+        this.shadow = this.attachShadow({ mode: 'open' });
+        const template = document.createElement('template');
+        template.innerHTML = `
       <style>
         @import url('styles/variable.css');
         @import url('styles/main.css');
@@ -58,34 +56,31 @@ class ApplicationList extends BaseHTMLElement {
         }
       </style>
       <ul id="application_list" class="flex-wrap"></ul>
-    `
-    this.shadow.appendChild(template.content.cloneNode(true))
-    this.dom.application_list = this.shadow.querySelector('#application_list')
-    this.dom.application_list.addEventListener('click', (e) => {
-      const target = e.target
-      let application_item = target.closest('.application-item')
-      if(application_item) {
-        this.current_application = this.application_list.find(application => application.id === application_item.id)
-        app.eventHandler('application-stage', 'showApplication', this.current_application, this)
-      }
-    })
-  }
-
-  createApplication(application) {
-    this.application_list.push(application)
-    const application_item = document.createElement('li')
-    application_item.className = 'application-item flex aic jcc pointer'
-    application_item.id = application.id
-    application_item.innerHTML = application.name
-    this.dom.application_list.appendChild(application_item)
-
-    const script = document.createElement('script')
-    script.src = application.js_url
-    document.body.append(script)
-    script.onload = () => {
-      app.eventHandler('application-stage', 'createApplication', application, this)
+    `;
+        this.shadow.appendChild(template.content.cloneNode(true));
+        this.dom.application_list = this.shadow.querySelector('#application_list');
+        this.dom.application_list.addEventListener('click', (e) => {
+            const target = e.target;
+            let application_item = target.closest('.application-item');
+            if (application_item) {
+                this.current_application = this.application_list.find((application) => application.id === application_item.id);
+                app.eventHandler('application-stage', 'showApplication', this.current_application, this);
+            }
+        });
     }
-  }
+    createApplication(application) {
+        this.application_list.push(application);
+        const application_item = document.createElement('li');
+        application_item.className = 'application-item flex aic jcc pointer';
+        application_item.id = application.id;
+        application_item.innerHTML = application.name;
+        this.dom.application_list.appendChild(application_item);
+        const script = document.createElement('script');
+        script.src = application.js_url;
+        document.body.append(script);
+        script.onload = () => {
+            app.eventHandler('application-stage', 'createApplication', application, this);
+        };
+    }
 }
-
-window.customElements.define('application-list', ApplicationList)
+window.customElements.define('application-list', ApplicationList);
