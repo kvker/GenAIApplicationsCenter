@@ -48,7 +48,7 @@ class TaskControl extends BaseHTMLElement {
           background-color: blanchedalmond;
           padding: var(--main_gap);
         }
-        #application_list {
+        #task_application_list {
           width: 100%;
           height: 100%;
         }
@@ -65,12 +65,12 @@ class TaskControl extends BaseHTMLElement {
           <p>应用名</p>
           <p>创建时间</p>
         </div>
-        <ul id="application_list" class="w-100"></ul>
+        <ul id="task_application_list" class="w-100"></ul>
       </div>
     `
     this.shadow.appendChild(template.content.cloneNode(true))
 
-    this.dom.application_list = this.shadow.querySelector('#application_list')
+    this.dom.application_list = this.shadow.querySelector('#task_application_list')
     this.dom.application_list.addEventListener('click', (e) => {
       const target = e.target
       let application_item = target.closest('.application-item')
