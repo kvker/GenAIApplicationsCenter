@@ -3,8 +3,7 @@
     "dev": "concurrently 'npm:anywhere' 'npm:tsc'",
     "tsc": "tsc -w",
     "anywhere": "anywhere -h localhost -d src",
-    "gulp": "rm -rf dist && echo 'delete dist/ success, then do gulp... && gulp",
-    "build": "npm run gulp"
+    "build": "rm -rf dist && echo 'delete dist/ success, then do gulp... && gulp"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
