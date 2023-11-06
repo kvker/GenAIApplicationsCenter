@@ -92,7 +92,7 @@ class TaskControl extends BaseHTMLElement {
       li.id = application.id
       li.innerHTML = `
         <div class="application-item-name">${application.name}</div>
-        <div class="application-item-time">${Date.now()}</div>
+        <div class="application-item-time">${dayjs().format('HH:MM:ss')}</div>
       `
       this.dom.application_list.append(li)
       this.application_dom_list.push(li)
