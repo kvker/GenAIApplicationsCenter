@@ -6,7 +6,7 @@ class TranslationE2CWC extends BaseOnceChatHTMLElement {
       placeholder: '请输入需要翻译的英语',
       button_label: '翻译',
       pre_content: '请将下面一段英语翻译成中文：【',
-      tail_content: '】。\n要求：1、信达雅。',
+      tail_content: '】。\n要求：1、信达雅；2、只需要翻译，不要解释为什么这样翻译。',
     }
   }
 }
