@@ -49,8 +49,7 @@ class BaseOnceChatHTMLElement extends BaseHTMLElement {
         }
       </style>
       <div id="base_once_chat_container" class="flex-c h-100">
-       <textarea class="base-once-chat-textarea" placeholder="${this.params.placeholder}"></textarea>
-       <button class="submit-button button-primary my-20">${this.params.button_label}</button>
+       <textarea class="base-once-chat-textarea mb-20" placeholder="${this.params.placeholder}\nEnter发送，Shift+Enter换行"></textarea>
 
        <div class="flex-c">
         <pre class="result none scroll-y"></pre>
@@ -62,8 +61,16 @@ class BaseOnceChatHTMLElement extends BaseHTMLElement {
         this.dom.textarea = shadow_root.querySelector('textarea');
         this.dom.result = shadow_root.querySelector('.result');
         this.dom.submit_button = shadow_root.querySelector('.submit-button');
-        this.dom.submit_button.addEventListener('click', (e) => {
-            this.doSubmit();
+        this.dom.textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.shiftKey) {
+                e.preventDefault();
+                this.dom.textarea.value += '\n';
+            }
+            else if (e.key === 'Enter') {
+                // 取消默认换行
+                e.preventDefault();
+                this.doSubmit();
+            }
         });
     }
     doSubmit() {
