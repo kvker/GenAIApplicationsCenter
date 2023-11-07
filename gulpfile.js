@@ -64,7 +64,7 @@ function docs() {
 }
 
 function files() {
-  return src('src/app.webmanifest').pipe(dest('dist/'))
+  return src(['src/app.webmanifest', 'src/robots.txt', 'src/favicon.ico']).pipe(dest('dist/'))
 }
 
 exports.default = parallel(htmls, styles, scripts, libs, icons, images, docs, files)
