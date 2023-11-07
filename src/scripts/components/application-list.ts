@@ -74,7 +74,7 @@ class ApplicationList extends BaseHTMLElement {
       const target = e.target as HTMLElement
       let application_item = target.closest('.application-item') as HTMLElement
       if (application_item) {
-        let application = this.application_list.find((application: Application) => application.id === application_item.id)\
+        let application = this.application_list.find((application: Application) => application.id === application_item.id)
         if(!application.custom) return
         this.current_application = application
         this.deleteApplication(this.current_application)
