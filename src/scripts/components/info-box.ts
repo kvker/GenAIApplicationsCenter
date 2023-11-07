@@ -28,7 +28,7 @@ class InfoBox extends BaseHTMLElement {
   init() {
     this.shadow = this.attachShadow({ mode: 'open' })
     const template = document.createElement('template')
-    let user = lc.currentUser()
+    let user = null //lc.currentUser()
     template.innerHTML = `
       <style>
         @import url('styles/variable.css');
@@ -36,57 +36,33 @@ class InfoBox extends BaseHTMLElement {
         :host {
           display: block;
           width: 100%;
-          height: 100%;
+          height: 200px;
           margin-top: var(--main_gap);
           background-color: burlywood;
           padding: var(--main_gap);
         }
-        #userinfo {
-          width: 200px;
-          height: 100%;
-          background-color: antiquewhite;
-
-          .avatar {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-          }
-
-          .username {
-            color: red;
-          }
-
-          .integration {
-            color: blue;
-          }
+        .qr-code {
+          width: auto;
+          height: 120px;
         }
         #create_application {
           background:antiquewhite;
         }
       </style>
       <div id="info_box" class="f1 h-100">
-        <div id="userinfo_box" class="w-100 h-100 ${user ? '' : 'none'} flex aic jcsb">
-          <div id="userinfo">
-            <img class="avatar" src="">
-            <p class="username"></p>
-            <p class="integration"></p>
+        <div id="userinfo_box" class="w-100 h-100 flex aic jcfe">
+          <div class="text-right mr-20">
+            <p class="mb-20">诚邀AI应用玩家、设计师</P>
+            <p>AI应用中心沟通群</P>
           </div>
-          info_box
-          <div id="create_application" class="h-100">create_application</div>
+          <img class="qr-code" src="images/qr-code.png">
         </div>
-        <div id="no_userinfo_box" class="flex aic jcc h-100 pointer underline ${user ? 'none' : ''}">点击登录</div>
       </div>
     `
     this.shadow.appendChild(template.content.cloneNode(true))
 
     this.dom.userinfo_box = this.shadow.querySelector('#userinfo_box')
     this.dom.no_userinfo_box = this.shadow.querySelector('#no_userinfo_box')
-
-    this.dom.no_userinfo_box.addEventListener('click', (e: MouseEvent) => {
-      this.doLogin()
-    })
-
-    user && this.updateUserinfoBox()
   }
 
   doLogin() {
