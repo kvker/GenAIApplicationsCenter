@@ -75,12 +75,11 @@ class ApplicationList extends BaseHTMLElement {
         application_item.id = application.id;
         application_item.innerHTML = application.name;
         this.dom.application_list.appendChild(application_item);
-        const script = document.createElement('script');
-        script.src = application.js_url;
-        document.body.append(script);
-        script.onload = () => {
-            app.eventHandler('application-stage', 'createApplication', application, this);
-        };
+        if (application.js_url) {
+            const script = document.createElement('script');
+            script.src = application.js_url;
+            document.body.append(script);
+        }
     }
 }
 window.customElements.define('application-list', ApplicationList);

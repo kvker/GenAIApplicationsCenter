@@ -14,9 +14,11 @@ interface BaseObject {
 
 interface Application {
   name: string,
-  tag: string,
-  js_url: string,
   id: string,
+  js_url?: string, // 引用的 js 路径
+  placeholder?: string, // 占位符，用来提示用户输入
+  pre_content?: string, // 前置指令
+  tail_content?: string, // 后置指令
 }
 
 

@@ -90,8 +90,6 @@ class ApplicationStage extends BaseHTMLElement {
             this.doClose.call(this);
         });
     }
-    createApplication(application) {
-    }
     showApplication(application) {
         this.current_application = application;
         this.dom.stage_mask.classList.remove('scale-0');
@@ -102,7 +100,12 @@ class ApplicationStage extends BaseHTMLElement {
             this.dom.stage_application_container.append(this.current_application_dom); // 创建或放到最后一个位置
         }
         else {
-            this.current_application_dom = document.createElement(application.tag);
+            if (application.js_url) {
+                this.current_application_dom = document.createElement(application.id);
+            }
+            else {
+                this.current_application_dom = new OnceChatHTMLElement(application);
+            }
             this.current_application_dom.id = application.id;
             this.dom.stage_application_container.append(this.current_application_dom);
             this.application_dom_list.push(this.current_application_dom);

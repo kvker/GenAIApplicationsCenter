@@ -56,28 +56,30 @@
   <script src="scripts/components/task-control.js"></script>
   <script src="scripts/components/info-box.js"></script>
   <script src="scripts/components/application-stage.js"></script>
-  <script src="scripts/components/base/base-once-chat.js"></script>
+  <script src="scripts/components/once-chat.js"></script>
   <script>
     window.application_list = [{
       name: '聊天机器人',
-      tag: 'chat-box',
       js_url: 'scripts/components/chat-box.js',
       id: 'chat-box',
     }, {
       name: '情感分析',
-      tag: 'effection-analysis',
-      js_url: 'scripts/components/effection-analysis.js',
       id: 'effection-analysis',
+      placeholder: '这里输入需要检测的文本信息，如商品评论等',
+      pre_content: '请基于以下内容，帮我分析其中信息包含的情感，并告诉这段话是中性、积极、还是消极，并给出理由。',
+      tail_content: '1、格式化输出，格式为"结果：xxx\n原因：xxx"；2、不用给出其他建议，只给结果即可。',
     }, {
       name: '中译英',
-      tag: 'translation-c2e',
-      js_url: 'scripts/components/translation-c2e.js',
       id: 'translation-c2e',
+      placeholder: '请输入需要翻译的中文',
+      pre_content: '请将下面一段中文翻译成英语。',
+      tail_content: '1、使用英伦口吻；2、只需要翻译，不要解释为什么这样翻译。',
     }, {
       name: '英译中',
-      tag: 'translation-e2c',
-      js_url: 'scripts/components/translation-e2c.js',
       id: 'translation-e2c',
+      placeholder: '请输入需要翻译的英语',
+      pre_content: '请将下面一段英语翻译成中文。',
+      tail_content: '1、信达雅；2、只需要翻译，不要解释为什么这样翻译。',
     }]
   </script>
   <script src="scripts/app.js"></script>

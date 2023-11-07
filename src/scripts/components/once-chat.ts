@@ -1,6 +1,11 @@
-class BaseOnceChatHTMLElement extends BaseHTMLElement {
-  constructor() {
+class OnceChatHTMLElement extends BaseHTMLElement {
+  params: Application
+  application: Application
+  constructor(params: Application) {
     super()
+    this.params = params
+    this.application = this.params
+    this.setAttribute('id', this.params.id)
     // 加载依赖
     this.loadDependences()
       .then(() => {
@@ -38,19 +43,19 @@ class BaseOnceChatHTMLElement extends BaseHTMLElement {
           padding: 20px
         }
 
-        #base_once_chat_container .base-once-chat-textarea {
+        #${this.params.id + '_container'} .base-once-chat-textarea {
           width: 100%;
           height: 120px;
           padding: 20px;
         }
 
-        #base_once_chat_container .result {
+        #${this.params.id + '_container'} .result {
           background: white;
           max-height: 340px;
           padding: 20px;
         }
       </style>
-      <div id="base_once_chat_container" class="flex-c h-100">
+      <div id="${this.params.id + '_container'}" class="flex-c h-100">
        <textarea class="base-once-chat-textarea mb-20" placeholder="${this.params.placeholder}\nEnter发送，Shift+Enter换行"></textarea>
 
        <div class="flex-c">
@@ -88,7 +93,7 @@ class BaseOnceChatHTMLElement extends BaseHTMLElement {
   }
 
   concatContent(text: string) {
-    let content = `${this.params.pre_content}${text}${this.params.tail_content}`
+    let content = `${this.params.pre_content} 如下：【${text}】\n注意要求：\n${this.params.tail_content}`
     return content
   }
 
@@ -117,3 +122,5 @@ class BaseOnceChatHTMLElement extends BaseHTMLElement {
     return this.dom.textarea.value.trim()
   }
 }
+
+window.customElements.define('once-chat', OnceChatHTMLElement)
