@@ -106,32 +106,52 @@ class ChatBox extends BaseHTMLElement {
           color:#fff;
           border-top-right-radius: 1px;
         }
+        .submit-button {
+          position: absolute;
+          right: 40px;
+          bottom: 40px;
+          width: 56px;
+          font-size: 14px;
+          display: none;
+        }
+        @media screen and (max-width: 768px) {
+          .chat-input {
+            padding-right: 60px;
+          }
+          .submit-button {
+            display: block;
+          }
+        }
       </style>
-      <div class="container">
+      <div class="container relative">
         <div class="chat-container">
           <div class="chat-last-item"></div>
         </div>
         <div class="input-container p-main">
-          <textarea class="chat-input" placeholder="在这里输入问题...\nEnter发送，Shift+Enter换行" disabled="true" type="text"></textarea>
+          <textarea class="chat-input" placeholder="在这里输入问题...\nShift+Enter发送" disabled="true" type="text"></textarea>
         </div>
+        <button class="submit-button button-primary">提交</button>
       </div>
     `
     this.shadow.appendChild(template.content.cloneNode(true))
-    this.chat_box = this.shadow.querySelector('.chat-container')
     this.chat_last_item = this.shadow.querySelector('.chat-last-item')
-    this.input_dom = this.shadow.querySelector('.chat-input')
+    this.chat_box = this.shadow.querySelector('.chat-container')
     this.chat_box.addEventListener('scroll', this.handleScroll.bind(this))
+
+    this.input_dom = this.shadow.querySelector('.chat-input')
     this.input_dom.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Enter' && e.shiftKey) {
+        // 取消默认换行
+        e.preventDefault()
+        this.doSubmit()
+      }
+      else if (e.key === 'Enter') {
         e.preventDefault()
         this.input_dom.value += '\n'
       }
-      else if (e.key === 'Enter') {
-        // 取消默认换行
-        e.preventDefault()
-        this.inputValue()
-      }
     })
+    this.dom.submit_button = this.shadow.querySelector('.submit-button')
+    this.dom.submit_button.addEventListener('click', this.doSubmit.bind(this))
 
     this.init()
   }
@@ -169,7 +189,7 @@ class ChatBox extends BaseHTMLElement {
     // console.log('Scrolling:', this.chat_box.scrollTop)
   }
 
-  inputValue() {
+  doSubmit() {
     if (!this.input_dom.value.trim()) return
     if (this.status.is_sending) {
       alert('正在处理中...')

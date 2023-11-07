@@ -54,10 +54,18 @@ class OnceChatHTMLElement extends BaseHTMLElement {
           max-height: 340px;
           padding: 20px;
         }
+        .submit-button {
+          display: none;
+        }
+        @media screen and (max-width: 768px) {
+          .submit-button {
+            display: block;
+          }
+        }
       </style>
       <div id="${this.params.id + '_container'}" class="flex-c h-100">
-       <textarea class="base-once-chat-textarea mb-20" placeholder="${this.params.placeholder}\nEnter发送，Shift+Enter换行"></textarea>
-
+       <textarea class="base-once-chat-textarea mb-20" placeholder="${this.params.placeholder}\nShift+Enter发送"></textarea>
+      <button class="submit-button button-primary mb-20">提交</button>
        <div class="flex-c">
         <pre class="result none scroll-y"></pre>
        </div>
@@ -72,13 +80,13 @@ class OnceChatHTMLElement extends BaseHTMLElement {
 
     this.dom.textarea.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Enter' && e.shiftKey) {
-        e.preventDefault()
-        this.dom.textarea.value += '\n'
-      }
-      else if (e.key === 'Enter') {
         // 取消默认换行
         e.preventDefault()
         this.doSubmit()
+      }
+      else if (e.key === 'Enter') {
+        e.preventDefault()
+        this.dom.textarea.value += '\n'
       }
     })
   }

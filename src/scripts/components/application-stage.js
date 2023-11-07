@@ -67,6 +67,18 @@ class ApplicationStage extends BaseHTMLElement {
           border: 1px solid #FFFFFF;
           box-shadow: 0 0 2px 2px #FFFFFF;
         }
+        @media screen and (max-width: 768px) {
+          #stage_controls {
+            height: 40px;
+          }
+          #stage_min,
+          #stage_max,
+          #stage_close {
+            width: 60px;
+            height: 20px;
+            font-size: 12px;
+          }
+        }
       </style>
       <div id="stage_mask" class="mask flex aic jcc scale-0">
         <div id="stage" class="flex-c scale-0">
