@@ -77,6 +77,9 @@ class OnceChatHTMLElement extends BaseHTMLElement {
     this.dom.textarea = shadow_root.querySelector('textarea')
     this.dom.result = shadow_root.querySelector('.result')
     this.dom.submit_button = shadow_root.querySelector('.submit-button')
+    this.dom.submit_button.addEventListener('click', () => {
+      this.doSubmit()
+    })
 
     this.dom.textarea.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Enter' && e.shiftKey) {
