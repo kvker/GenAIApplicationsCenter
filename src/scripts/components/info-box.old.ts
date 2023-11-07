@@ -1,4 +1,4 @@
-class InfoBox extends BaseHTMLElement {
+class InfoBox1 extends BaseHTMLElement {
   constructor() {
     super()
     console.log('用户信息 web component 被创建了')
