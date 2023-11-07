@@ -42,7 +42,7 @@ class InfoBox extends BaseHTMLElement {
           border: 1px solid #FFFFFF;
         }
         .button-primary {
-          width: 200px;
+          width: 120px;
         }
         .button-create {
           margin-right: auto;
@@ -59,10 +59,12 @@ class InfoBox extends BaseHTMLElement {
           padding: 20px;
           background: white;
           border-radius: 8px;
+          width: 100%;
+          max-width: 400px;
         }
 
         .form input, .form textarea {
-          width: 400px;
+          width: 100%;
         }
 
         .form input {
@@ -73,13 +75,19 @@ class InfoBox extends BaseHTMLElement {
           height: 100px;
           padding: 10px;
         }
+
+        @media screen and (max-width: 768px) {
+          .mask {
+            padding: var(--main_gap);
+          }
+        }
       </style>
       <div id="info_box" class="f1 h-100">
         <div class="w-100 h-100 flex aic jcfe">
-          <button class="button-primary button-create">创建自己的AI应用</button>
+          <button class="button-primary button-create">创建AI应用</button>
           <div class="text-right mr-20">
-            <p class="mb-20">诚邀AI应用玩家、设计师</P>
-            <p>AI应用中心沟通群</P>
+            <p class="mb-10">AI玩家</P>
+            <p>沟通群</P>
           </div>
           <img class="qr-code" src="images/qr-code.png">
         </div>

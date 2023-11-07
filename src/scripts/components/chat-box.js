@@ -12,7 +12,7 @@ class ChatBox extends BaseHTMLElement {
           display: flex;
           flex-direction: column;
           width: 100%;
-          height: 588px;
+          height: 100%;
         }
 
         .p-main {

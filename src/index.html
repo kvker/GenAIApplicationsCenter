@@ -8,18 +8,6 @@
   <title>AI人工智能应用中心</title>
   <meta name="keywords" content="AI，人工智能，学习AI，创建AI应用，AI赚钱，文字创作，写作，作曲，文章生成，聊天，视频，论文，周报，日报">
   <meta name="description" content="牛逼的生成式AI桌面工具。">
-  <script>
-    !function () {
-      const is_pwa = window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true
-      const width = 1280 + 14
-      const height = 720 + 40
-      if(is_pwa) {
-        const is_big_window = innerWidth > width && innerHeight > height
-        is_big_window || window.resizeTo(width, height)
-      }
-    }()
-  </script>
   <link rel="manifest" href="app.webmanifest">
   <link rel="stylesheet" href="styles/variable.css">
   <link rel="stylesheet" href="styles/main.css">
@@ -28,12 +16,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      height: 100vh;
     }
 
     #playground {
-      width: 1280px;
-      height: 720px;
+      width: 100%;
+      min-width: 1280px;
+      height: 100%;
+      min-height: 720px;
       padding: var(--main_gap);
+    }
+
+    @media screen and (max-width: 768px) {
+      #playground {
+        min-width: 320px;
+        min-height: 480px;
+      }
     }
   </style>
 </head>

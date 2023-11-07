@@ -63,11 +63,16 @@ class TaskControl extends BaseHTMLElement {
         .highlight {
           background: white;
         }
+        @media screen and (max-width: 768px) {
+          .create-time, .application-item-time {
+            display: none;
+          }
+        }
       </style>
       <div id="task_control" class="flex-c aic jcsb">
         <div class="flex aic jcsb w-100 task-titles">
           <p>应用名</p>
-          <p>创建时间</p>
+          <p class="create-time">创建时间</p>
         </div>
         <ul id="task_application_list" class="w-100"></ul>
       </div>
