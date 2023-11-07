@@ -43,23 +43,27 @@ class TaskControl extends BaseHTMLElement {
         #task_control {
           width: 100%;
           height: 100%;
-          background-color: blanchedalmond;
           padding: var(--main_gap);
+          border: 1px solid #FFFFFF;
         }
         #task_application_list {
           width: 100%;
           height: 100%;
+        }
+        .task-titles {
+          border-bottom: 1px solid white;
+          padding-bottom: 10px;
         }
         .application-item {
           width: 100%;
           height: 44px;
         }
         .highlight {
-          border: 1px solid red;
+          background: white;
         }
       </style>
       <div id="task_control" class="flex-c aic jcsb">
-        <div class="flex aic jcsb w-100">
+        <div class="flex aic jcsb w-100 task-titles">
           <p>应用名</p>
           <p>创建时间</p>
         </div>

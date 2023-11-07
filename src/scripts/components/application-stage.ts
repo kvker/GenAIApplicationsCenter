@@ -44,7 +44,7 @@ class ApplicationStage extends BaseHTMLElement {
           width: 90%;
           height: 90%;
           transition: transform 0.3s linear;
-          background-color: antiquewhite;
+          background: linear-gradient(180deg, #f0f9ff 0%, #ebe8ff 100%);
         }
 
         .scale-0 {
@@ -57,7 +57,7 @@ class ApplicationStage extends BaseHTMLElement {
 
         #stage_controls {
           height: 60px;
-          background-color: red;
+          border-bottom: 1px solid #FFFFFF;
         }
 
         #stage_min,
@@ -65,8 +65,9 @@ class ApplicationStage extends BaseHTMLElement {
         #stage_close {
           width: 120px;
           height: 40px;
-          background-color: bisque;
           margin-right: var(--main_gap);
+          border: 1px solid #FFFFFF;
+          box-shadow: 0 0 2px 2px #FFFFFF;
         }
       </style>
       <div id="stage_mask" class="mask flex aic jcc scale-0">

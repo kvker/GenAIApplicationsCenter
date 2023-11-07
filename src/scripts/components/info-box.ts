@@ -38,8 +38,8 @@ class InfoBox extends BaseHTMLElement {
           width: 100%;
           height: 200px;
           margin-top: var(--main_gap);
-          background-color: burlywood;
           padding: var(--main_gap);
+          border: 1px solid #FFFFFF;
         }
         .button-primary {
           width: 200px;

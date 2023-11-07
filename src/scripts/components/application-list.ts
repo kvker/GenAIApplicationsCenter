@@ -42,19 +42,15 @@ class ApplicationList extends BaseHTMLElement {
         #application_list {
           width: 100%;
           height: 100%;
-          background-color: beige;
           padding: var(--main_gap);
-        }
-        #create_application {
-          width: 200px;
-          height: 100%;
-          background-color: antiquewhite;
+          border: 1px solid #FFFFFF;
         }
         .application-item {
-          width: 200px;
-          height: 80px;
-          background-color: antiquewhite;
+          min-width: 120px;
+          height: 40px;
           margin-left: var(--main_gap);
+          border: 1px solid #FFFFFF;
+          box-shadow: 0 0 2px 2px #FFFFFF;
         }
         .cutom-application-item {
           background-color: ivory;
