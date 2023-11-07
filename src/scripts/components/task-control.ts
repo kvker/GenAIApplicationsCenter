@@ -112,6 +112,7 @@ class TaskControl extends BaseHTMLElement {
   deleteApplication(application: Application) {
     this.current_application = application
     this.current_application_dom = this.application_dom_list.find((i: HTMLElement) => i.id === application.id)
+    if(!this.current_application_dom) return
     this.current_application_dom.remove()
     this.application_dom_list.splice(this.application_dom_list.indexOf(this.current_application_dom), 1)
     this.application_list.splice(this.application_list.indexOf(this.current_application), 1)

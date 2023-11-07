@@ -19,6 +19,7 @@ interface Application {
   placeholder?: string, // 占位符，用来提示用户输入
   pre_content?: string, // 前置指令
   tail_content?: string, // 后置指令
+  custom?: boolean, // 是否是自定义的应用
 }
 
 

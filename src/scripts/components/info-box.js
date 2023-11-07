@@ -39,6 +39,12 @@ class InfoBox extends BaseHTMLElement {
           background-color: burlywood;
           padding: var(--main_gap);
         }
+        .button-primary {
+          width: 200px;
+        }
+        .button-create {
+          margin-right: auto;
+        }
         .qr-code {
           width: auto;
           height: 120px;
@@ -46,45 +52,115 @@ class InfoBox extends BaseHTMLElement {
         #create_application {
           background:antiquewhite;
         }
+
+        .form {
+          padding: 20px;
+          background: white;
+          border-radius: 8px;
+        }
+
+        .form input, .form textarea {
+          width: 400px;
+        }
+
+        .form input {
+          padding: 0 10px;
+        }
+
+        .form textarea {
+          height: 100px;
+          padding: 10px;
+        }
       </style>
       <div id="info_box" class="f1 h-100">
-        <div id="userinfo_box" class="w-100 h-100 flex aic jcfe">
+        <div class="w-100 h-100 flex aic jcfe">
+          <button class="button-primary button-create">创建自己的AI应用</button>
           <div class="text-right mr-20">
             <p class="mb-20">诚邀AI应用玩家、设计师</P>
             <p>AI应用中心沟通群</P>
           </div>
           <img class="qr-code" src="images/qr-code.png">
         </div>
+        <div class="mask flex aic jcc none">
+          <div class="form flex-c aic jcc">
+            <p class="w-100">应用名称</p>
+            <input class="mb-20 mt-10 name" placeholder="如：小学语文老师" value="小学语文老师">
+            <p class="w-100">AI身份与适当的解释</p>
+            <textarea class="mb-20 mt-10 identity" placeholder="如：\n现在你是小学语文老师，职能是进行作业批改和点评，下面是我提供给你的作业内容。">现在你是小学语文老师，职能是进行作业批改和点评，下面是我提供给你的作业内容。</textarea>
+            <p class="w-100">对AI的要求</p>
+            <textarea class="mb-20 mt-10 request" placeholder="请按照1、2、3、...的形式，如：\n1、检测语法错误，并告知修改方案；2、检测错别字，并告知修改方案。">1、检测语法错误，并告知修改方案；2、检测错别字，并告知修改方案。</textarea>
+            <p class="w-100">给用户的提示语</p>
+            <textarea class="mb-20 mt-10 placeholder" placeholder="根据上面内容提示用户，如：\n请输入小学语文作文内容。">请输入小学语文作文内容。</textarea>
+            <button class="button-primary button-submit mt-20">创建自己的AI应用</button>
+          </div>
+        </div>
       </div>
     `;
         this.shadow.appendChild(template.content.cloneNode(true));
-        this.dom.userinfo_box = this.shadow.querySelector('#userinfo_box');
-        this.dom.no_userinfo_box = this.shadow.querySelector('#no_userinfo_box');
-    }
-    doLogin() {
-        let username = prompt('请输入账号');
-        if (username) {
-            let password = prompt('请输入密码');
-            if (password) {
-                lc.login(username, md5(password))
-                    .then((user) => this.handlerLogin());
+        this.dom.name = this.shadow.querySelector('.name');
+        this.dom.identity = this.shadow.querySelector('.identity');
+        this.dom.request = this.shadow.querySelector('.request');
+        this.dom.placeholder = this.shadow.querySelector('.placeholder');
+        this.dom.mask = this.shadow.querySelector('.mask');
+        this.dom.mask.addEventListener('click', (e) => {
+            if (e.target === this.dom.mask) {
+                this.dom.mask.classList.add('none');
             }
+        });
+        this.dom.button_create = this.shadow.querySelector('.button-create');
+        this.dom.button_create.addEventListener('click', () => {
+            this.dom.mask.classList.remove('none');
+        });
+        this.dom.button_submit = this.shadow.querySelector('.button-submit');
+        this.dom.button_submit.addEventListener('click', () => {
+            this.doSubmit();
+        });
+    }
+    doSubmit() {
+        const application = this.createApplication();
+        if (!application)
+            return;
+        app.eventHandler('application-list', 'updateApplication', application);
+        this.dom.mask.classList.add('none');
+    }
+    createApplication() {
+        let application = {
+            id: 'custom' + Date.now() + '',
+            name: this.dom.name.value,
+            placeholder: this.dom.placeholder.value,
+            pre_content: this.dom.identity.value,
+            tail_content: this.dom.request.value,
+            custom: true,
+        };
+        if (!application.name) {
+            alert('请输入应用名称');
+            return;
         }
+        if (!application.placeholder) {
+            alert('请输入提示语');
+            return;
+        }
+        if (!application.pre_content) {
+            alert('请输入AI身份与适当的解释');
+            return;
+        }
+        if (!application.tail_content) {
+            alert('请输入对AI的要求');
+            return;
+        }
+        let application_list_string = localStorage.getItem('application_list') || '[]';
+        let application_list = JSON.parse(application_list_string);
+        application_list.push(application);
+        localStorage.setItem('application_list', JSON.stringify(application_list));
+        return application;
     }
-    handlerLogin() {
-        this.dom.no_userinfo_box.classList.add('none');
-        this.dom.userinfo_box.classList.remove('none');
-        this.updateUserinfoBox();
-    }
-    handlerLogout() {
-        this.dom.userinfo_box.classList.add('none');
-        this.dom.no_userinfo_box.classList.remove('none');
-    }
-    updateUserinfoBox() {
-        let userinfo_box = this.dom.userinfo_box;
-        userinfo_box.querySelector('.avatar').src = lc.currentUser().get('avatar_url');
-        userinfo_box.querySelector('.username').innerText = lc.currentUser().get('username');
-        userinfo_box.querySelector('.integration').innerText = lc.currentUser().get('integration') + '步';
+    deleteApplication(application) {
+        let application_list = JSON.parse(localStorage.getItem('application_list') || '[]');
+        let index = application_list.findIndex((item) => item.id === application.id);
+        if (index > -1) {
+            application_list.splice(index, 1);
+        }
+        localStorage.setItem('application_list', JSON.stringify(application_list));
     }
 }
 window.customElements.define('info-box', InfoBox);

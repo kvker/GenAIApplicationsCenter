@@ -56,6 +56,9 @@ class ApplicationList extends BaseHTMLElement {
           background-color: antiquewhite;
           margin-left: var(--main_gap);
         }
+        .cutom-application-item {
+          background-color: ivory;
+        }
       </style>
       <ul id="application_list" class="flex-wrap"></ul>
     `
@@ -69,12 +72,27 @@ class ApplicationList extends BaseHTMLElement {
         app.eventHandler('application-stage', 'showApplication', this.current_application, this)
       }
     })
+
+    this.dom.application_list.addEventListener('contextmenu', (e: MouseEvent) => {
+      e.preventDefault()
+      const target = e.target as HTMLElement
+      let application_item = target.closest('.application-item') as HTMLElement
+      if (application_item) {
+        let application = this.application_list.find((application: Application) => application.id === application_item.id)\
+        if(!application.custom) return
+        this.current_application = application
+        this.deleteApplication(this.current_application)
+      }
+    })
   }
 
   createApplication(application: Application) {
     this.application_list.push(application)
     const application_item = document.createElement('li')
     application_item.className = 'application-item flex aic jcc pointer'
+    if (application.custom) {
+      application_item.className += ' cutom-application-item'
+    }
     application_item.id = application.id
     application_item.innerHTML = application.name
     this.dom.application_list.appendChild(application_item)
@@ -84,6 +102,24 @@ class ApplicationList extends BaseHTMLElement {
       script.src = application.js_url
       document.body.append(script)
     }
+  }
+
+  updateApplication(application: Application) {
+    this.createApplication(application)
+  }
+
+  deleteApplication(application: Application) {
+    const index = this.application_list.findIndex((item: Application) => item.id === application.id)
+    if (index > -1) {
+      this.application_list.splice(index, 1)
+    }
+    const application_item = this.dom.application_list.querySelector('#' + application.id)
+    if (application_item) {
+      application_item.remove()
+    }
+
+    app.eventHandler('info-box', 'deleteApplication', application)
+    app.eventHandler('task-control', 'deleteApplication', application)
   }
 }
 
