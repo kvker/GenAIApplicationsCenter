@@ -59,6 +59,7 @@ class TaskControl extends BaseHTMLElement {
         .application-item {
           width: 100%;
           height: 44px;
+          font-size: 14px;
         }
         .highlight {
           background: white;
@@ -70,7 +71,7 @@ class TaskControl extends BaseHTMLElement {
         }
       </style>
       <div id="task_control" class="flex-c aic jcsb">
-        <div class="flex aic jcsb w-100 task-titles">
+        <div class="flex aic jcsb w-100 task-titles bold">
           <p>应用名</p>
           <p class="create-time">创建时间</p>
         </div>
