@@ -54,6 +54,9 @@ class InfoBox extends BaseHTMLElement {
         #create_application {
           background:antiquewhite;
         }
+        .mask {
+          padding: var(--main_gap);
+        }
 
         .form {
           padding: 20px;
@@ -77,8 +80,11 @@ class InfoBox extends BaseHTMLElement {
         }
 
         @media screen and (max-width: 768px) {
-          .mask {
-            padding: var(--main_gap);
+          :host {
+            height: 80px;
+          }
+          .qr-code {
+            height: 60px;
           }
         }
       </style>
