@@ -105,7 +105,7 @@ class InfoBox extends BaseHTMLElement {
             <textarea class="mb-20 mt-10 request" placeholder="请按照1、2、3、...的形式，如：\n1、检测语法错误，并告知修改方案；2、检测错别字，并告知修改方案。">1、检测语法错误，并告知修改方案；2、检测错别字，并告知修改方案。</textarea>
             <p class="w-100">给用户的提示语</p>
             <textarea class="mb-20 mt-10 placeholder" placeholder="根据上面内容提示用户，如：\n请输入小学语文作文内容。">请输入小学语文作文内容。</textarea>
-            <button class="button-primary button-submit mt-20">创建自己的AI应用</button>
+            <button class="button-primary button-submit mt-20">创建</button>
           </div>
         </div>
       </div>
