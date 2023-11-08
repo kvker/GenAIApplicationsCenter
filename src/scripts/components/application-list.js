@@ -1,36 +1,34 @@
+"use strict";
 class ApplicationList extends BaseHTMLElement {
-  constructor() {
-    super()
-    console.log('应用列表 web component 被创建了')
-    this.application_list = [] // 应用列表
-    this.current_application = null // 当前正在展示的应用
-    // 加载依赖
-    this.loadDependences()
-      .then(() => {
-        this.init()
-      })
-      .catch(error => {
-        alert(error.message || error)
-      })
-  }
-
-  loadDependences() {
-    return new Promise((s, j) => {
-      s() // 这里应该删除
-      // let script = document.createElement('script')
-      // script.src = '/url/path/xxx.js'
-      // document.body.append(script)
-      // script.onload = () => {
-
-      // }
-      // script.onerror = j
-    })
-  }
-
-  init() {
-    this.shadow = this.attachShadow({ mode: 'open' })
-    const template = document.createElement('template')
-    template.innerHTML = `
+    constructor() {
+        super();
+        console.log('应用列表 web component 被创建了');
+        this.application_list = []; // 应用列表
+        this.current_application = null; // 当前正在展示的应用
+        // 加载依赖
+        this.loadDependences()
+            .then(() => {
+            this.init();
+        })
+            .catch(error => {
+            alert(error.message || error);
+        });
+    }
+    loadDependences() {
+        return new Promise((s, j) => {
+            s(1); // 这里应该删除
+            // let script = document.createElement('script')
+            // script.src = '/url/path/xxx.js'
+            // document.body.append(script)
+            // script.onload = () => {
+            // }
+            // script.onerror = j
+        });
+    }
+    init() {
+        this.shadow = this.attachShadow({ mode: 'open' });
+        const template = document.createElement('template');
+        template.innerHTML = `
       <style>
         @import url('styles/variable.css');
         @import url('styles/main.css');
@@ -42,50 +40,75 @@ class ApplicationList extends BaseHTMLElement {
         #application_list {
           width: 100%;
           height: 100%;
-          background-color: beige;
           padding: var(--main_gap);
-        }
-        #create_application {
-          width: 200px;
-          height: 100%;
-          background-color: antiquewhite;
+          border: 1px solid #FFFFFF;
         }
         .application-item {
-          width: 200px;
-          height: 80px;
-          background-color: antiquewhite;
+          min-width: 120px;
+          height: 40px;
           margin-left: var(--main_gap);
+          border: 1px solid #FFFFFF;
+          box-shadow: 0 0 2px 2px #FFFFFF;
+        }
+        .cutom-application-item {
+          background-color: ivory;
         }
       </style>
       <ul id="application_list" class="flex-wrap"></ul>
-    `
-    this.shadow.appendChild(template.content.cloneNode(true))
-    this.dom.application_list = this.shadow.querySelector('#application_list')
-    this.dom.application_list.addEventListener('click', (e) => {
-      const target = e.target
-      let application_item = target.closest('.application-item')
-      if(application_item) {
-        this.current_application = this.application_list.find(application => application.id === application_item.id)
-        app.eventHandler('application-stage', 'showApplication', this.current_application, this)
-      }
-    })
-  }
-
-  createApplication(application) {
-    this.application_list.push(application)
-    const application_item = document.createElement('li')
-    application_item.className = 'application-item flex aic jcc pointer'
-    application_item.id = application.id
-    application_item.innerHTML = application.name
-    this.dom.application_list.appendChild(application_item)
-
-    const script = document.createElement('script')
-    script.src = application.js_url
-    document.body.append(script)
-    script.onload = () => {
-      app.eventHandler('application-stage', 'createApplication', application, this)
+    `;
+        this.shadow.appendChild(template.content.cloneNode(true));
+        this.dom.application_list = this.shadow.querySelector('#application_list');
+        this.dom.application_list.addEventListener('click', (e) => {
+            const target = e.target;
+            let application_item = target.closest('.application-item');
+            if (application_item) {
+                this.current_application = this.application_list.find((application) => application.id === application_item.id);
+                app.eventHandler('application-stage', 'showApplication', this.current_application, this);
+            }
+        });
+        this.dom.application_list.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const target = e.target;
+            let application_item = target.closest('.application-item');
+            if (application_item) {
+                let application = this.application_list.find((application) => application.id === application_item.id);
+                if (!application.custom)
+                    return;
+                this.current_application = application;
+                this.deleteApplication(this.current_application);
+            }
+        });
     }
-  }
+    createApplication(application) {
+        this.application_list.push(application);
+        const application_item = document.createElement('li');
+        application_item.className = 'application-item flex aic jcc pointer';
+        if (application.custom) {
+            application_item.className += ' cutom-application-item';
+        }
+        application_item.id = application.id;
+        application_item.innerHTML = application.name;
+        this.dom.application_list.appendChild(application_item);
+        if (application.js_url) {
+            const script = document.createElement('script');
+            script.src = application.js_url;
+            document.body.append(script);
+        }
+    }
+    updateApplication(application) {
+        this.createApplication(application);
+    }
+    deleteApplication(application) {
+        const index = this.application_list.findIndex((item) => item.id === application.id);
+        if (index > -1) {
+            this.application_list.splice(index, 1);
+        }
+        const application_item = this.dom.application_list.querySelector('#' + application.id);
+        if (application_item) {
+            application_item.remove();
+        }
+        app.eventHandler('info-box', 'deleteApplication', application);
+        app.eventHandler('task-control', 'deleteApplication', application);
+    }
 }
-
-window.customElements.define('application-list', ApplicationList)
+window.customElements.define('application-list', ApplicationList);

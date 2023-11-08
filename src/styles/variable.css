@@ -165,9 +165,17 @@ input::placeholder {
 }
 
 @media screen and (max-width: 768px) {
+
+  html,
+  page,
+  .page {
+    --main_gap: 8px;
+  }
+
   .nav-page {
     padding-top: calc(var(--navbar_height) + var(--main_gap)) !important;
   }
+
   .nav-content {
     padding-top: var(--navbar_height) !important;
   }
