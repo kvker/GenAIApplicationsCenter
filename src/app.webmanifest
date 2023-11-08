@@ -36,19 +36,39 @@
     {
       "src": "images/shortcut0.png",
       "type": "image/png",
-      "sizes": "1836x919"
+      "sizes": "1824x1027"
     },
     {
       "src": "images/shortcut1.png",
       "type": "image/png",
-      "sizes": "1836x919"
+      "sizes": "1824x1027"
+    },
+    {
+      "src": "images/shortcut2.png",
+      "type": "image/png",
+      "sizes": "1824x1027"
+    },
+    {
+      "src": "images/shortcut3.png",
+      "type": "image/png",
+      "sizes": "1824x1027"
+    },
+    {
+      "src": "images/shortcut4.png",
+      "type": "image/png",
+      "sizes": "1824x1027"
+    },
+    {
+      "src": "images/shortcut5.png",
+      "type": "image/png",
+      "sizes": "1824x1027"
     }
   ],
   "lang": "zh",
   "shortcuts": [
     {
       "name": "logo",
-      "url": "icons/logo-256.png",
+      "url": "icons/logo-512.png",
       "description": "logo"
     }
   ],
