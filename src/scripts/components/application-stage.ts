@@ -88,7 +88,7 @@ class ApplicationStage extends BaseHTMLElement {
             <button id="stage_min" class="flex aic jcc pointer">最小化</button>
             <button id="stage_close" class="flex aic jcc pointer">关闭</button>
           </div>
-          <div id="stage_application_container" class="flex aic jcc f1"></div>
+          <div id="stage_application_container" class="flex aic jcc f1 scroll-y"></div>
         </div>
       </div>
     `
